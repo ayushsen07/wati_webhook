@@ -45,6 +45,7 @@ try {
     console.log("✅ Firebase initialized successfully.");
 
     db = getFirestore(firebaseApp);
+    db.settings({ ignoreUndefinedProperties: true });
     server.locals.db = db; // Make db available in routes
 } catch (error) {
     console.error("❌ Firebase initialization error:", error);
