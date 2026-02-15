@@ -53,7 +53,7 @@ try {
 }
 
 // WATI Configuration
-const WATI_BASE_URL = 'https://live-mt-server.wati.io/361402/api/v1';
+const WATI_BASE_URL = 'https://live-mt-server.wati.io/430845/api/v1';
 const WATI_API_TOKEN = process.env.WATI_API_TOKEN;
 
 const supportedMediaTypes = ['image', 'audio', 'video', 'voice', 'document', 'sticker'];
@@ -291,6 +291,8 @@ async function handleRepliedMessage(db, event) {
 server.post('/api/wati/send-template', async (req, res) => {
     try {
         const { phone, templateName = "missed_appointment" } = req.body;
+        console.log("phone", phone);
+        console.log("templateName", templateName);
 
         // Validate required fields
         if (!phone) {
@@ -304,7 +306,7 @@ server.post('/api/wati/send-template', async (req, res) => {
                 template_name: templateName,
                 broadcast_name: `init_${Date.now()}`,
                 parameters: [{ name: "name", value: "Customer" }],
-                channel_number: "27772538155"
+                channel_number: "27767409418"
             },
             {
                 headers: {
@@ -506,6 +508,8 @@ server.get('/api/messages/:waNumber', async (req, res) => {
 server.post('/api/wati/send-message', async (req, res) => {
     try {
         const { phone, message } = req.body;
+        console.log("phone", phone);
+        console.log("message", message);
 
         if (!phone || !message) {
             return res.status(400).json({ error: "Phone and message are required" });
@@ -513,7 +517,7 @@ server.post('/api/wati/send-message', async (req, res) => {
 
         // 1. First send to WATI API
         const watiResponse = await axios.post(
-            `https://live-mt-server.wati.io/361402/api/v1/sendSessionMessage/${phone}?messageText=${encodeURIComponent(message)}`,
+            `https://live-mt-server.wati.io/430845/api/v1/sendSessionMessage/${phone}?messageText=${encodeURIComponent(message)}`,
             null, // No body needed for this request
             {
                 headers: {
