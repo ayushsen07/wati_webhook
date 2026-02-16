@@ -282,6 +282,7 @@ async function handleRepliedMessage(db, event) {
         rawData: event,
         updatedAt: Timestamp.now()
     };
+    console.log('event :',event)
 
     await db.collection('whatsapp_messages').doc(event.id).set(messageData, { merge: true });
     return { status: 'replied_message_processed' };
@@ -608,6 +609,11 @@ server.get('/api/contacts', async (req, res) => {
     }
 });
 
+
+//health check
+server.get('/health', (req, res) => {
+    res.status(200).json({status: 'Ok', message:'server is running'})
+});
 
 // Start the server
 httpServer.listen(PORT, () => {
